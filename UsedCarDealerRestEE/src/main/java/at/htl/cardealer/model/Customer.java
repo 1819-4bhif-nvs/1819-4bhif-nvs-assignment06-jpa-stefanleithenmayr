@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import java.time.LocalDate;
 
-@NamedQuery(name = "Customer.findAll", query = "select c from Customer c") //TODO: Join auf People, das man die Daten auch mitbekommt
+
+@NamedQuery(name = "Customer.findAll", query = "select c from Customer c join Person p on p.id = c.id")
 @Entity
 public class Customer extends Person {
 

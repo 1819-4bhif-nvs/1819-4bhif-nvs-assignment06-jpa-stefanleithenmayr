@@ -5,10 +5,8 @@ import at.htl.cardealer.model.Car;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -17,6 +15,7 @@ public class CarsEndpoint {
 
     @PersistenceContext
     EntityManager em;
+
 
     //http://localhost:8080/usedcardealer/API/cars/getCars
     @GET
@@ -37,7 +36,10 @@ public class CarsEndpoint {
     }
 
     @POST
-    public void insertCar(Car car){
+    @Path("insertCar")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void insertCar(Car car) {
         em.persist(car);
     }
 }

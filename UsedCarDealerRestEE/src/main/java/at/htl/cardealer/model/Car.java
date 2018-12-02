@@ -16,17 +16,18 @@ public class Car {
 
     private int mileage; //Kilometerstand
     private LocalDate firstRegistration; //Erstzulassung
+
     private boolean isSold; //Wurde das Auto bereits verkauft
     private int priceExpected; //Erwarteter Preis
     private int priceSold;
 
     @OneToOne (cascade = CascadeType.ALL)
     private Model model; //Legt das Automodell fest z.B. Audi A4
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private Customer from; //Wer hat das Auto dem Händler verkauft
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private Customer to; //An wenn wird das Auto verkauft
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private Employee seller; //Wer hat das Auto vermittelt
 
     public Car() {
@@ -39,6 +40,21 @@ public class Car {
         this.priceExpected = priceExpected;
         this.model = model;
         this.from = from;
+    }
+
+    public Car(int mileage, LocalDate firstRegistration, boolean isSold, int priceExpected) {
+        this.mileage = mileage;
+        this.firstRegistration = firstRegistration;
+        this.isSold = isSold;
+        this.priceExpected = priceExpected;
+    }
+
+    public Car(LocalDate firstRegistration) {
+        this.firstRegistration = firstRegistration;
+    }
+
+    public Car(int mileage) {
+        this.mileage = mileage;
     }
 
     public Long getId() {
