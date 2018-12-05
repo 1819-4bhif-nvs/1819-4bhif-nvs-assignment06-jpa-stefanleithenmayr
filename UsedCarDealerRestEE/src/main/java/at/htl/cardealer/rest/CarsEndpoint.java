@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("cars")
@@ -16,7 +17,18 @@ public class CarsEndpoint {
     @PersistenceContext
     EntityManager em;
 
+    //Create
+    @POST
+    @Path("insertCar")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response insertCar(Car car) {
+        em.persist(car);
+        return Response.ok().entity(car).build();
+    }
 
+    //Read - Methods
     //http://localhost:8080/usedcardealer/API/cars/getCars
     @GET
     @Path("getCars")
@@ -35,11 +47,26 @@ public class CarsEndpoint {
         return query.getResultList();
     }
 
-    @POST
-    @Path("insertCar")
+    //http://localhost:8080/usedcardealer/API/cars/getCars
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Car getCar(@PathParam("id") long id) {
+        return em.find(Car.class, id);
+    }
+
+    //Update Methods
+
+
+    //Delete Methods
+
+    @DELETE
     @Transactional
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void insertCar(Car car) {
-        em.persist(car);
+    @Path("deleteCar/{id}")
+    public void deleteCar(@PathParam("id") long id) {
+        Car car = em.find(Car.class, id);
+        if(car != null) {
+            em.remove(em.contains(car) ? car : em.merge(car));
+        }
     }
 }

@@ -17,6 +17,15 @@ import java.time.format.DateTimeFormatter;
 @Singleton
 public class InitBean {
 
+    private static InitBean initBean;
+
+    public static synchronized InitBean getInstance() {
+        if (initBean == null){
+            initBean = new InitBean();
+        }
+        return initBean;
+    }
+
     @PersistenceContext
     EntityManager em;
 
@@ -27,8 +36,7 @@ public class InitBean {
     public void init() {
         System.err.println("********** Init started");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Employee emp = new Employee(2500, 1234010180L, LocalDate.parse("2010-05-10", formatter), "Max",
                 "Mustermann", LocalDate.parse("1980-01-10", formatter), "+12345678910", "Musterstrasse 3", "x.muster@muster.at");
         em.persist(emp);
@@ -48,6 +56,17 @@ public class InitBean {
         Car car = new Car(101032,LocalDate.parse("2014-05-01"), false, 12500, model, customer);
         em.persist(car);
         car = new Car(42351,LocalDate.parse("2017-05-01"), true, 25000, model, customer);
+        em.persist(car);*/
+    }
+
+    public void addCar(Car car){
+        if (em == null){
+            System.err.println(car);
+        }
         em.persist(car);
+    }
+
+    public void deleteCar(Car car){
+
     }
 }

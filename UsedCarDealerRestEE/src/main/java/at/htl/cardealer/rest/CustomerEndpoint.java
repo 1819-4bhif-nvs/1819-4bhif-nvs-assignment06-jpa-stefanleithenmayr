@@ -1,6 +1,5 @@
 package at.htl.cardealer.rest;
 
-import at.htl.cardealer.model.Car;
 import at.htl.cardealer.model.Customer;
 
 import javax.persistence.EntityManager;

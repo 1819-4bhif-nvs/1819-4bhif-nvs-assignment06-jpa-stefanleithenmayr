@@ -12,8 +12,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -27,20 +30,12 @@ public class UsedCarsDealerTest {
     @Before
     public void initClient(){
         this.client = ClientBuilder.newClient();
-        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/insertCar");
+        this.target = client.target("http://localhost:8080/usedcardealer/API/cars");
     }
 
-    //.add("address", factory.createObjectBuilder()
-    //         .add("streetAddress", "21 2nd Street")
-    //         .add("city", "New York")
-    //         .add("state", "NY")
-    //         .add("postalCode", "10021"))
     @Test
-    public void t01_fetchCars() {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
+    public void t01_crud() {
+        //Post a new Car
         JsonObject vehicleJson = jsonBuilder
                 .add("mileage", 137120)
                 .add("firstRegistration", "2017-05-01")
@@ -51,11 +46,28 @@ public class UsedCarsDealerTest {
                                             .add("customerSince", "2017-05-01"))
                 .build();
 
-        this.target
+        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/insertCar");
+        Response response = this.target
                 .request()
                 .post(Entity.json(vehicleJson));
-        //assertThat(response.getStatus(), is(204));
+        JsonObject entity = response.readEntity(JsonObject.class);
+        int id = entity.getInt("id");
+        System.out.println(id);
+        assertThat(response.getStatus(), is(200));
+        assertThat(entity.getInt("mileage"), is(137120));
 
+        //Get Car
+        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/" + id);
+        JsonObject car = this.target.request(MediaType.APPLICATION_JSON).get(JsonObject.class);
+        assertThat(car.getInt("mileage"), is(137120)); //Check if right car*/
+
+        //Todo: Update Car
+
+        //Delete new Car
+        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/deleteCar/" + 1);
+        this.target.request().delete();
+
+        //System.out.println(response.getStatus());
         /*response = this.target.request(MediaType.APPLICATION_JSON).get();//.readEntity(JsonArray.class);
         JsonArray cars = response.readEntity(JsonArray.class);
         JsonObject firstCar = cars.get(0).asJsonObject();
