@@ -1,10 +1,14 @@
 package at.htl.cardealer.model;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import java.time.LocalDate;
 
 @Entity
-
+@NamedQueries({
+        @NamedQuery(name = "Employee.findAll", query = "select e from Employee e"),
+})
 public class Employee extends Person{
 
     private double salary;

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
-public class UsedCarsDealerTest {
+public class UsedCarsDealerST {
 
     private Client client;
     private WebTarget target;
@@ -34,7 +34,7 @@ public class UsedCarsDealerTest {
     }
 
     @Test
-    public void t01_crud() {
+    public void t01_crud_carEndpoint() {
         //Post a new Car
         JsonObject vehicleJson = jsonBuilder
                 .add("mileage", 137120)
@@ -57,7 +57,7 @@ public class UsedCarsDealerTest {
         assertThat(entity.getInt("mileage"), is(137120));
 
         //Get Car
-        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/" + id);
+        this.target = client.target("http://localhost:8080/usedcardealer/API/cars/getCar/" + id);
         JsonObject car = this.target.request(MediaType.APPLICATION_JSON).get(JsonObject.class);
         assertThat(car.getInt("mileage"), is(137120)); //Check if right car*/
 
@@ -66,12 +66,34 @@ public class UsedCarsDealerTest {
         //Delete new Car
         this.target = client.target("http://localhost:8080/usedcardealer/API/cars/deleteCar/" + 1);
         this.target.request().delete();
+    }
 
-        //System.out.println(response.getStatus());
-        /*response = this.target.request(MediaType.APPLICATION_JSON).get();//.readEntity(JsonArray.class);
-        JsonArray cars = response.readEntity(JsonArray.class);
-        JsonObject firstCar = cars.get(0).asJsonObject();
-        JsonObject model = firstCar.getJsonObject("model");
-        assertThat(model.getString("brand"), is("Audi"));*/
+    @Test
+    public void t02_crud_customerEndpoint() {
+
+    }
+
+    @Test
+    public void t03_crud_employeeEndpoint() {
+        //Post a new Employee
+        JsonObject employeeJson = jsonBuilder
+                .add("salary", 3000.00)
+                .add("socialNumber", 1234010180L)
+                .add("employeedSince", "2017-05-01")
+                .add("firstName", "Max")
+                .add("lastName", "Mustermitarbeiter")
+                .add("birth", "1995-05-01")
+                .add("phoneNumber", "0645/12345678")
+                .add("address", "Musterstreet 1, Musterhausen 1")
+                .add("email", "m.muster@provider.net")
+                .build();
+
+        this.target = client.target("http://localhost:8080/usedcardealer/API/employees/insertEmployee");
+        Response response = this.target
+                .request()
+                .post(Entity.json(employeeJson));
+        JsonObject entity = response.readEntity(JsonObject.class);
+        assertThat(response.getStatus(), is(200));
+        assertThat(entity.getString("email"), is("m.muster@provider.net"));
     }
 }

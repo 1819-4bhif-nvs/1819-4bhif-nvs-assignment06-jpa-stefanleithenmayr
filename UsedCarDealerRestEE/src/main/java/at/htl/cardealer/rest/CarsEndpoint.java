@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("cars")
+@Path("/cars")
 public class CarsEndpoint {
 
     @PersistenceContext
@@ -19,7 +19,7 @@ public class CarsEndpoint {
 
     //Create
     @POST
-    @Path("insertCar")
+    @Path("/insertCar")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ public class CarsEndpoint {
     //Read - Methods
     //http://localhost:8080/usedcardealer/API/cars/getCars
     @GET
-    @Path("getCars")
+    @Path("/getCars")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> getCars(){
         TypedQuery<Car> query = em.createNamedQuery("Car.findAll", Car.class);
@@ -40,16 +40,16 @@ public class CarsEndpoint {
 
     //http://localhost:8080/usedcardealer/API/cars/getSoldCars
     @GET
-    @Path("getSoldCars")
+    @Path("/getSoldCars")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Car> getSoldCars(){
         TypedQuery<Car> query = em.createNamedQuery("Car.findSold", Car.class);
         return query.getResultList();
     }
 
-    //http://localhost:8080/usedcardealer/API/cars/getCars
+    //http://localhost:8080/usedcardealer/API/cars/getCar/id
     @GET
-    @Path("{id}")
+    @Path("/getCar/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Car getCar(@PathParam("id") long id) {
         return em.find(Car.class, id);
@@ -62,7 +62,7 @@ public class CarsEndpoint {
 
     @DELETE
     @Transactional
-    @Path("deleteCar/{id}")
+    @Path("/deleteCar/{id}")
     public void deleteCar(@PathParam("id") long id) {
         Car car = em.find(Car.class, id);
         if(car != null) {
