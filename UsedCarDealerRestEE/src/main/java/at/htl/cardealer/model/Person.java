@@ -4,10 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-
-@Inheritance(
-        strategy = InheritanceType.JOINED
-)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
     @Id
@@ -34,6 +31,10 @@ public class Person {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

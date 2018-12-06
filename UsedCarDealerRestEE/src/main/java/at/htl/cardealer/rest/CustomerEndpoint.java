@@ -18,6 +18,8 @@ public class CustomerEndpoint {
     EntityManager em;
 
     //Create
+
+    //http://localhost:8080/usedcardealer/API/customers/insertCustomer
     @POST
     @Path("insertCustomer")
     @Transactional
@@ -29,7 +31,7 @@ public class CustomerEndpoint {
     }
 
     //Read - Methods
-    //http://localhost:8080/usedcardealer/API/customer/getCustomers
+    //http://localhost:8080/usedcardealer/API/customers/getCustomers
     @GET
     @Path("getCustomers")
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +40,7 @@ public class CustomerEndpoint {
         return query.getResultList();
     }
 
-    //http://localhost:8080/usedcardealer/API/cars/getCustomer/id
+    //http://localhost:8080/usedcardealer/API/customers/getCustomer/id
     @GET
     @Path("getCustomer/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,9 +50,24 @@ public class CustomerEndpoint {
 
     //Update Methods
 
+    //http://localhost:8080/usedcardealer/API/customers/updateCustomer/id
+    @PUT
+    @Path("/updateCustomer/{id}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomer(@PathParam("id") long id, Customer updatedCustomer) {
+        if (updatedCustomer == null || em.find(Customer.class, id) == null){
+            return Response.serverError().build();
+        }
+        updatedCustomer.setId(id);
+        em.merge(updatedCustomer);
+        return Response.ok().entity(em.find(Customer.class, id)).build();
+    }
 
     //Delete Methods
 
+    //http://localhost:8080/usedcardealer/API/customers/deleteCustomer/id
     @DELETE
     @Transactional
     @Path("deleteCustomer/{id}")

@@ -1,5 +1,6 @@
 package at.htl.cardealer.rest;
 
+import at.htl.cardealer.model.Customer;
 import at.htl.cardealer.model.Employee;
 
 import javax.persistence.EntityManager;
@@ -48,8 +49,20 @@ public class EmployeeEndpoint {
 
     //Update Methods
 
-
-
+    //http://localhost:8080/usedcardealer/API/employees/updateEmployee/id
+    @PUT
+    @Path("/updateEmployee/{id}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateEmployee(@PathParam("id") long id, Employee updatedEmployee) {
+        if (updatedEmployee == null || em.find(Employee.class, id) == null){
+            return Response.serverError().build();
+        }
+        updatedEmployee.setId(id);
+        em.merge(updatedEmployee);
+        return Response.ok().entity(em.find(Employee.class, id)).build();
+    }
 
     //Delete Methods
 

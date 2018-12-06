@@ -17,7 +17,9 @@ public class CarsEndpoint {
     @PersistenceContext
     EntityManager em;
 
-    //Create
+    //region Create
+
+    //http://localhost:8080/usedcardealer/API/cars/insertCar
     @POST
     @Path("/insertCar")
     @Transactional
@@ -27,8 +29,10 @@ public class CarsEndpoint {
         em.persist(car);
         return Response.ok().entity(car).build();
     }
+    //endregion
 
-    //Read - Methods
+    //region Read - Methods
+
     //http://localhost:8080/usedcardealer/API/cars/getCars
     @GET
     @Path("/getCars")
@@ -54,12 +58,29 @@ public class CarsEndpoint {
     public Car getCar(@PathParam("id") long id) {
         return em.find(Car.class, id);
     }
+    //endregion
 
-    //Update Methods
+    //region Update Methods
 
+    //http://localhost:8080/usedcardealer/API/cars/updateCar/id
+    @PUT
+    @Path("/updateCar/{id}")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCar(@PathParam("id") long id, Car updatedCar) {
+        if (updatedCar == null || em.find(Car.class, id) == null){
+            return Response.serverError().build();
+        }
+        updatedCar.setId(id);
+        em.merge(updatedCar);
+        return Response.ok().entity(em.find(Car.class, id)).build();
+    }
+    //endregion
 
-    //Delete Methods
+    //region Delete Methods
 
+    //http://localhost:8080/usedcardealer/API/cars/deleteCar/id
     @DELETE
     @Transactional
     @Path("/deleteCar/{id}")
@@ -69,4 +90,5 @@ public class CarsEndpoint {
             em.remove(em.contains(car) ? car : em.merge(car));
         }
     }
+    //endregion
 }
