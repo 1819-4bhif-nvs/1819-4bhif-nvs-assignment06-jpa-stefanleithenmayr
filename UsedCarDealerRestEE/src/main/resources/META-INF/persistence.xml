@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
     <persistence-unit name="dbPU">
-        <jta-data-source>java:jboss/datasources/DbDS</jta-data-source>
+        <!--<jta-data-source>java:jboss/datasources/DbDS</jta-data-source>-->
+        <jta-data-source>java:/H2DS</jta-data-source>
+        <!-- Don't forget do config the h2 database in wildfly and deploy it-->
+        <!-- repo2.maven.org/maven2/com/h2database/h2/1.4.197/h2-1.4.197.jar download h2 for deployment-->
+        <!-- jdbc:h2:mem:test;DB_CLOSE_DELAY=-1 Connection String for h2-->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
