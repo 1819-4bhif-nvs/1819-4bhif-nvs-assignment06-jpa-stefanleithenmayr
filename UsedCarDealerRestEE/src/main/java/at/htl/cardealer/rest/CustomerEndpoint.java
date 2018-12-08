@@ -2,6 +2,7 @@ package at.htl.cardealer.rest;
 
 import at.htl.cardealer.model.Customer;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("customers")
+@Stateless
 public class CustomerEndpoint {
 
     @PersistenceContext

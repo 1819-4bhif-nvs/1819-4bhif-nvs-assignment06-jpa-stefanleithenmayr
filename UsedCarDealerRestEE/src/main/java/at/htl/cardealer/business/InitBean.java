@@ -1,17 +1,10 @@
 package at.htl.cardealer.business;
 
-import at.htl.cardealer.model.Car;
-import at.htl.cardealer.model.Customer;
-import at.htl.cardealer.model.Employee;
-import at.htl.cardealer.model.Model;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Startup
 @Singleton
@@ -57,17 +50,5 @@ public class InitBean {
         em.persist(car);
         car = new Car(42351,LocalDate.parse("2017-05-01"), true, 25000, model, customer);
         em.persist(car);*/
-    }
-
-    //TODO: Add Data Interface
-    public void addCar(Car car){
-        if (em == null){
-            System.err.println(car);
-        }
-        em.persist(car);
-    }
-
-    public void deleteCar(Car car){
-
     }
 }
