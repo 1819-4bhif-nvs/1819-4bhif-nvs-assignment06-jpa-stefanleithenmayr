@@ -28,6 +28,7 @@ public class CarsEndpoint {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertCar(Car car) {
+        System.err.println("Test");
         em.persist(car);
         return Response.ok().entity(car).build();
     }

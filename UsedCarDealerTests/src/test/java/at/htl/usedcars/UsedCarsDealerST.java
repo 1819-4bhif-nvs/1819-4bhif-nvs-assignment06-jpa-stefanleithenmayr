@@ -60,7 +60,7 @@ public class UsedCarsDealerST {
         //Get Car
         this.target = client.target("http://localhost:8080/usedcardealer/API/cars/getCar/" + id);
         JsonObject car = this.target.request(MediaType.APPLICATION_JSON).get(JsonObject.class);
-        assertThat(car.getInt("mileage"), is(137120)); //Check if right car*/
+        assertThat(car.getInt("mileage"), is(137120)); //Check if right car
 
         //Update Car
         this.target = client.target("http://localhost:8080/usedcardealer/API/cars/updateCar/" + id);

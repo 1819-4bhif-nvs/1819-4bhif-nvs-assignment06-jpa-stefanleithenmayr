@@ -24,6 +24,6 @@
     </dependencies>
 
     <build>
-        <finalName>usedcardealerjpa</finalName>
+        <finalName>usedcardealer</finalName>
     </build>
 </project>
