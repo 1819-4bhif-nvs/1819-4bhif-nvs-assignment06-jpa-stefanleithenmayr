@@ -10,15 +10,6 @@ import javax.persistence.PersistenceContext;
 @Singleton
 public class InitBean {
 
-    private static InitBean initBean;
-
-    public static synchronized InitBean getInstance() {
-        if (initBean == null){
-            initBean = new InitBean();
-        }
-        return initBean;
-    }
-
     @PersistenceContext
     EntityManager em;
 
