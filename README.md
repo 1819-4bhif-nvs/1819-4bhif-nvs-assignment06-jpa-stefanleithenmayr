@@ -1,3 +1,11 @@
+# Gebrauchtwagenplatzverwaltung
+
+# CLD
+![CLD](images/CLD.png)
+
+# ERD
+![ERD](images/ERD.jpg)
+
 # 1819_4bhif_nvs_assignment06_jpa
 Übungsbeispiel mit individueller Aufgabenstellung zum Thema JPA
 
