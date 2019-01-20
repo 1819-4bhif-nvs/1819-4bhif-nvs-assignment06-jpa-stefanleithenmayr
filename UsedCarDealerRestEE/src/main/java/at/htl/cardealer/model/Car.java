@@ -11,35 +11,36 @@ import java.time.LocalDate;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String chassisNumber;
 
     private int mileage; //Kilometerstand
     private LocalDate firstRegistration; //Erstzulassung
-
     private boolean isSold; //Wurde das Auto bereits verkauft
     private int priceExpected; //Erwarteter Preis
-    private int priceSold;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     private Model model; //Legt das Automodell fest z.B. Audi A4
-    @OneToOne (cascade = CascadeType.ALL)
+    /*@OneToOne (cascade = CascadeType.ALL)
     private Customer from; //Wer hat das Auto dem Händler verkauft
     @OneToOne (cascade = CascadeType.ALL)
     private Customer to; //An wenn wird das Auto verkauft
     @OneToOne (cascade = CascadeType.ALL)
-    private Employee seller; //Wer hat das Auto vermittelt
+    private Employee seller; //Wer hat das Auto vermittelt*/
+
+    @ManyToOne
+    private Person owner;
 
     public Car() {
     }
 
-    public Car(int mileage, LocalDate firstRegistration, boolean isSold, int priceExpected, Model model, Customer from) {
+    public Car(String chassisNumber, int mileage, LocalDate firstRegistration, boolean isSold, int priceExpected, Model model) {
+        this.chassisNumber = chassisNumber;
         this.mileage = mileage;
         this.firstRegistration = firstRegistration;
         this.isSold = isSold;
         this.priceExpected = priceExpected;
         this.model = model;
-        this.from = from;
+        //this.from = from;
     }
 
     public Car(int mileage, LocalDate firstRegistration, boolean isSold, int priceExpected) {
@@ -57,12 +58,12 @@ public class Car {
         this.mileage = mileage;
     }
 
-    public Long getId() {
-        return id;
+    public String getChassisNumber() {
+        return chassisNumber;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setChassisNumber(String chassisNumber) {
+        this.chassisNumber = chassisNumber;
     }
 
     public int getMileage() {
@@ -97,13 +98,23 @@ public class Car {
         this.priceExpected = priceExpected;
     }
 
-    public int getPriceSold() {
+
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
+    /*public int getPriceSold() {
         return priceSold;
     }
 
     public void setPriceSold(int priceSold) {
         this.priceSold = priceSold;
-    }
+    }*/
 
     public Model getModel() {
         return model;
@@ -113,7 +124,7 @@ public class Car {
         this.model = model;
     }
 
-    public Customer getFrom() {
+    /*public Customer getFrom() {
         return from;
     }
 
@@ -135,5 +146,5 @@ public class Car {
 
     public void setSeller(Employee seller) {
         this.seller = seller;
-    }
+    }*/
 }

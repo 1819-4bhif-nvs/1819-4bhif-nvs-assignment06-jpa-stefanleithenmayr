@@ -1,27 +1,31 @@
 package at.htl.cardealer.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Model {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String brand;
     private String model;
 
+    @OneToMany (mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Car> cars;
+
     //region Constructor
     public Model() {
+        this.cars = new ArrayList<>();
     }
 
     public Model(String brand, String model) {
         this.brand = brand;
         this.model = model;
+        this.cars = new ArrayList<>();
     }
     //endregion
 
@@ -45,5 +49,14 @@ public class Model {
     public void setModel(String model) {
         this.model = model;
     }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
     //endregion
 }

@@ -2,14 +2,19 @@ package at.htl.cardealer.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    List<Car> cars;
 
     private String firstName, lastName;
     private LocalDate birth;
@@ -18,6 +23,7 @@ public class Person {
     private String email;
 
     public Person() {
+        this.cars = new ArrayList<>();
     }
 
     public Person(String firstName, String lastName, LocalDate birth, String phoneNumber, String address, String email) {
@@ -27,6 +33,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
+        this.cars = new ArrayList<>();
     }
 
     public Long getId() {
@@ -83,5 +90,16 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Car> getCars() {
+        if (cars == null){
+            cars = new ArrayList<>();
+        }
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 }

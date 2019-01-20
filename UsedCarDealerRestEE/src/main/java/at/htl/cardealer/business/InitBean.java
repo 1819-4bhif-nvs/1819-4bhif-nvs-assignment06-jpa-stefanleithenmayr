@@ -1,10 +1,14 @@
 package at.htl.cardealer.business;
 
+import at.htl.cardealer.model.*;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Startup
 @Singleton
@@ -18,7 +22,22 @@ public class InitBean {
 
     @PostConstruct
     public void init() {
-        System.err.println("********** Init started");
+        /*System.err.println("********** Init started");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Customer customer = new Customer("Franz", "Muster", LocalDate.parse("1997-03-10"), "+234524552", "Musterstraße 99", "franz.muster@muster.at", LocalDate.parse("2018-04-13", formatter));
+        em.persist(customer);
+
+        Employee emp = new Employee(2500, 1234010180L, LocalDate.parse("2010-05-10", formatter), "Max",
+                "Mustermann", LocalDate.parse("1980-01-10", formatter), "+12345678910", "Musterstrasse 3", "x.muster@muster.at");
+        em.persist(emp);
+
+        Model model = new Model("Audi", "A4");
+        Car car = new Car("WDD 169 007-1J-236589",101032,LocalDate.parse("2014-05-01"), false, 12500, model);
+        em.persist(car);
+
+        Trade trade = new Trade(car, customer, emp, 'V', 10000, LocalDate.parse("2010-05-10", formatter));
+        em.persist(trade);
+
 
         /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Employee emp = new Employee(2500, 1234010180L, LocalDate.parse("2010-05-10", formatter), "Max",

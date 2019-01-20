@@ -8,6 +8,7 @@
          jdbc:h2:mem:test;DB_CLOSE_DELAY=-1 Connection String for h2-->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

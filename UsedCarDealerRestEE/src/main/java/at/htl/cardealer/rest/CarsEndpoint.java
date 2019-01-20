@@ -71,11 +71,11 @@ public class CarsEndpoint {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateCar(@PathParam("id") long id, Car updatedCar) {
+    public Response updateCar(@PathParam("id") String id, Car updatedCar) {
         if (updatedCar == null || em.find(Car.class, id) == null){
             return Response.serverError().build();
         }
-        updatedCar.setId(id);
+        updatedCar.setChassisNumber(id);
         em.merge(updatedCar);
         return Response.ok().entity(em.find(Car.class, id)).build();
     }
